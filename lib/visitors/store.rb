@@ -2,6 +2,7 @@ require 'redis'
 require 'redis-namespace'
 
 class Visitors::Store
+  ID_STORE_NAMESPACE = 'document_ids'
   TTL = 24 * 60 * 60 # 24 hours
 
   attr_reader :namespace, :redis_config
@@ -19,16 +20,31 @@ class Visitors::Store
     @store ||= Redis::Namespace.new(@namespace, :redis => redis)
   end
 
+  def each
+    documents.each do |document_id|
+      yield document_id, store.hgetall(document_id)
+    end
+  end
+
+  def documents
+    store.smembers(ID_STORE_NAMESPACE)
+  end
+
   def find(document_id)
-    store.hgetall document_id
+    store.hgetall(document_id)
   end
 
   def increment(document_id, field)
     Visitors.assert_valid_field!(field.to_sym)
-    count = store.hincrby document_id, field.to_sym, 1
-    store.expire document_id, TTL
-    count
+    push(document_id, field)
   end
 
   alias :incr :increment
+
+  private
+
+  def push(document_id, field)
+    store.sadd(ID_STORE_NAMESPACE, document_id)
+    store.hincrby(document_id, field, 1)
+  end
 end

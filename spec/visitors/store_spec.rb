@@ -38,10 +38,16 @@ describe Visitors::Store do
 
   describe '#increment' do
     context 'with a valid field' do
-      it 'increments the field' do
-        Visitors.stub!(:fields => %w[field])
-        store.store.should_receive(:hincrby).with('abc', 'field', 1).and_return(true)
-        store.increment('abc', 'field')
+      before(:each) do
+        Visitors.stub!(:assert_valid_field! => true)
+      end
+
+      context 'with a business id that is not in the log' do
+        it 'stores the id of the business and increments the field' do
+          store.store.should_receive(:sadd).with('document_ids', '123').and_return(true)
+          store.store.should_receive(:hincrby).with('123', 'show', 1).and_return(true)
+          store.increment('123', 'show')
+        end
       end
     end
   end
