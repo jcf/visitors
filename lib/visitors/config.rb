@@ -2,11 +2,7 @@ class Visitors::Config
   class MissingEnvironmentError < StandardError; end
 
   def self.load
-    @instance ||= new.tap { |instance| instance.send(:define_methods_from_yaml) }
-  end
-
-  def new
-    @instance
+    new.tap { |instance| instance.send(:define_methods_from_yaml) }
   end
 
   def all
