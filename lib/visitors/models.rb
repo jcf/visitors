@@ -10,8 +10,9 @@ MODEL_NAMES.each do |class_name|
     class Visitors::#{class_name}
       include DataMapper::Resource
 
-      property :id,       Serial
-      property :archived, Time
+      property :id,          Serial
+      property :archived,    Time
+      property :resource_id, Integer, :required => true
 
       Visitors.fields.each do |field|
         property field, Integer, :default => 0, :required => true

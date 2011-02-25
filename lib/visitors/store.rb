@@ -13,7 +13,7 @@ class Visitors::Store
   end
 
   def redis
-    @store ||= Redis::Namespace.new(@namespace, :redis => redis_connection)
+    @redis ||= Redis::Namespace.new(@namespace, :redis => redis_connection)
   end
 
   def each
@@ -21,6 +21,23 @@ class Visitors::Store
       yield resource_id, store.hgetall(resource_id)
     end
   end
+
+  def slice(count = 10)
+    Hash[*slice_resource_ids(:srandmember, count).map { |resource_id|
+      result = [resource_id, find(resource_id)]
+      yield *result if block_given?
+      result
+    }.flatten]
+  end
+
+  # def slice!(count = 10)
+  #   Hash[*slice_resource_ids(:spop, count).map { |resource_id|
+  #     result = [resource_id, find(resource_id)]
+  #     yield *result if block_given?
+  #     redis.del(resource_id)
+  #     result
+  #   }.flatten]
+  # end
 
   def count
     redis.scard(SET_NAME)
@@ -42,6 +59,11 @@ class Visitors::Store
   alias :incr :increment
 
   private
+
+  def slice_resource_ids(redis_method, count)
+    slicer = lambda { redis.send(redis_method, SET_NAME) }
+    ([slicer] * count).map(&:call).compact
+  end
 
   def redis_connection
     @redis_connection ||= Redis.new(@redis_config)
