@@ -4,9 +4,9 @@ module Visitors
   extend self
 
   autoload :Store, 'visitors/store'
-  autoload :Day,   'visitors/business'
-  autoload :Month, 'visitors/business'
-  autoload :Year,  'visitors/business'
+  autoload :Day,   'visitors/models'
+  autoload :Month, 'visitors/models'
+  autoload :Year,  'visitors/models'
 
   FIELDS = [:show, :search, :email, :website]
 
