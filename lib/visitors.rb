@@ -1,5 +1,3 @@
-require 'active_support'
-
 $:.push File.expand_path('..', __FILE__)
 
 module Visitors

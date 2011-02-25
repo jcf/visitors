@@ -20,8 +20,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   {
-    'activesupport'       => '3.0.4',
-    'i18n'                => '0.5.0',
     'redis'               => '2.1.1',
     'redis-namespace'     => '0.10.0',
     'dm-core'             => '1.0.2',
