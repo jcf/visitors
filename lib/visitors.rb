@@ -1,6 +1,9 @@
+require 'forwardable'
+
 $:.push File.expand_path('..', __FILE__)
 
 module Visitors
+  extend Forwardable
   extend self
 
   autoload :Store,  'visitors/store'
@@ -20,6 +23,12 @@ module Visitors
   def config
     @config ||= Config.load
   end
+
+  def store
+    @store ||= Visitors::Store.new
+  end
+
+  def_delegators :store, :find, :increment
 
   def assert_valid_field!(name)
     unless fields.include?(name)
