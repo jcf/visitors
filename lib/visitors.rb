@@ -28,7 +28,7 @@ module Visitors
     @store ||= Visitors::Store.new
   end
 
-  def_delegators :store, :find, :increment
+  def_delegators :store, :find, :document, :increment, :incr
 
   def assert_valid_field!(name)
     unless fields.include?(name)

@@ -2,7 +2,7 @@ require 'redis'
 require 'redis-namespace'
 
 class Visitors::Store
-  ID_STORE_NAMESPACE = 'document_ids'
+  SET_NAME = 'resource_ids'
   TTL = 24 * 60 * 60 # 24 hours
 
   attr_reader :namespace, :redis_config
@@ -13,38 +13,42 @@ class Visitors::Store
   end
 
   def redis
-    @redis ||= Redis.new(@redis_config)
-  end
-
-  def store
-    @store ||= Redis::Namespace.new(@namespace, :redis => redis)
+    @store ||= Redis::Namespace.new(@namespace, :redis => redis_connection)
   end
 
   def each
-    documents.each do |document_id|
-      yield document_id, store.hgetall(document_id)
+    resources.each do |resource_id|
+      yield resource_id, store.hgetall(resource_id)
     end
   end
 
-  def documents
-    store.smembers(ID_STORE_NAMESPACE)
+  def count
+    redis.scard(SET_NAME)
   end
 
-  def find(document_id)
-    store.hgetall(document_id)
+  def resources
+    redis.smembers(SET_NAME)
   end
 
-  def increment(document_id, field)
+  def find(resource_id)
+    redis.hgetall(resource_id)
+  end
+
+  def increment(resource_id, field)
     Visitors.assert_valid_field!(field.to_sym)
-    push(document_id, field)
+    push(resource_id, field)
   end
 
   alias :incr :increment
 
   private
 
-  def push(document_id, field)
-    store.sadd(ID_STORE_NAMESPACE, document_id)
-    store.hincrby(document_id, field, 1)
+  def redis_connection
+    @redis_connection ||= Redis.new(@redis_config)
+  end
+
+  def push(resource_id, field)
+    redis.sadd(SET_NAME, resource_id)
+    redis.hincrby(resource_id, field, 1)
   end
 end
