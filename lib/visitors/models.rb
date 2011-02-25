@@ -1,10 +1,12 @@
 require 'dm-core'
 require 'dm-migrations'
 
-DataMapper.setup(:default, 'postgres://localhost/visitors')
+DataMapper.setup(:default, Visitors.config.database)
 
-%w[Day Month Year].each do |class_name|
-  Object.class_eval <<-RUBY, __FILE__, __LINE__ + 1
+MODEL_NAMES = %w[Day Month Year]
+
+MODEL_NAMES.each do |class_name|
+  Visitors.class_eval <<-RUBY, __FILE__, __LINE__ + 1
     class Visitors::#{class_name}
       include DataMapper::Resource
 
@@ -12,7 +14,7 @@ DataMapper.setup(:default, 'postgres://localhost/visitors')
       property :archived, Time
 
       Visitors.fields.each do |field|
-	property field, Integer, :default => 0, :required => true
+        property field, Integer, :default => 0, :required => true
       end
     end
   RUBY

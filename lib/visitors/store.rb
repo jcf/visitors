@@ -2,28 +2,29 @@ require 'redis'
 require 'redis-namespace'
 
 class Visitors::Store
-  attr_reader :redis, :namespace
+  attr_reader :namespace, :redis_config
 
-  def initialize(namespace, redis_config)
-    @redis = Redis.new(redis_config)
-    @namespace = Redis::Namespace.new(namespace, :redis => @redis)
+  def initialize(options = {})
+    @namespace    = options.delete(:namespace) || Visitors.config.redis_namespace
+    @redis_config = options                    || Visitors.config.redis_config
   end
 
-  def find(business_id)
-    namespace.hgetall business_id
+  def redis
+    @redis ||= Redis.new(@redis_config)
   end
 
-  def increment(business_id, type)
-    namespace.hincrby business_id, type, 1
+  def store
+    @store ||= Redis::Namespace.new(@namespace, :redis => redis)
+  end
+
+  def find(document_id)
+    store.hgetall document_id
+  end
+
+  def increment(document_id, field)
+    Visitors.assert_valid_field!(field)
+    store.hincrby document_id, field, 1
   end
 
   alias :incr :increment
-
-  def method_missing(message, *args, &block)
-    if namespace.respond_to?(message)
-      namespace.send(message, *args, &block)
-    else
-      super(message, *args, &block)
-    end
-  end
 end

@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
 
   {
     'rspec'       => '2.5.0',
-    'guard-rspec' => '0.1.9'
+    'guard-rspec' => '0.1.9',
+    'rb-fsevent'  => '0.3.10'
   }.each { |gem, version| s.add_development_dependency gem, "~> #{version}" }
 end
