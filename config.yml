@@ -1,5 +1,4 @@
 development:
-  database: postgres://localhost/visitors_development
   redis_namespace: visitors_development
   redis_config:
     host: localhost
