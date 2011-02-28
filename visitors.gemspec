@@ -27,7 +27,8 @@ Gem::Specification.new do |s|
     'dm-postgres-adapter' => '1.0.2',
     'sinatra'             => '1.1.3',
     'thor'                => '0.14.6',
-    'haml'                => '3.0.25'
+    'haml'                => '3.0.25',
+    'vegas'               => '0.1.8'
   }.each { |gem, version| s.add_dependency gem, "~> #{version}" }
 
   {

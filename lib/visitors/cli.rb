@@ -8,6 +8,7 @@ class Visitors::CLI < Thor
 
   desc 'web', 'start the web console (NOT IMPLEMENTED)'
   def web
-    say 'Not implemented yet', :red
+    require 'vegas'
+    Vegas::Runner.new(Visitors::Server, 'visitors_app')
   end
 end

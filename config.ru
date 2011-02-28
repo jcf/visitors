@@ -1,2 +1,2 @@
-require File.expand_path('../lib/visitors/app', __FILE__)
-run Sinatra::Application
+require File.expand_path('../lib/visitors/server', __FILE__)
+run Visitors::Server

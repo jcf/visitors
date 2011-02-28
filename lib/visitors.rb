@@ -4,6 +4,7 @@ require 'visitors/helpers'
 module Visitors
   extend self
 
+  autoload :Server,   'visitors/server'
   autoload :Config,   'visitors/config'
   autoload :Resource, 'visitors/resource'
 
