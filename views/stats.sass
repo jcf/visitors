@@ -1,0 +1,113 @@
+body
+  font: 12px/14px 'helvetica neue', sans-serif
+  color: #444
+  background-color: #eee
+
+h1
+  text-transform: uppercase
+  font-size: 48px
+  letter-spacing: -0.05em
+
+  a
+    color: #444
+    text-decoration: none
+
+    &:hover
+      color: #b30000
+
+#container
+  width: 800px
+  margin: 0 auto
+  padding: 20px
+  background-color: #fff
+  border: 1px solid #ccc
+  box-shadow: 0 1px 3px rgba(#000, 0.2)
+
+#lookup
+  input[type="text"]
+    border: 1px solid #ccc
+    width: 710px
+    margin: 0
+    padding: 5px
+    font: 20px 'helvetica neue', sans-serif
+
+  input[type="submit"]
+    width: 85px
+    margin: 0
+    padding: 5px
+    background-color: #eee
+    border: 1px solid #ccc
+    border-radius: 5px
+    font: 20px 'helvetica neue', sans-serif
+
+    &:hover
+      background-color: #444
+      color: #fff
+      cursor: pointer
+      border-color: #444
+
+#stats
+  margin-top: 20px
+
+  .month
+    padding: 0 0 10px
+    margin: 0 0 10px
+    overflow: hidden
+    border-bottom: 1px solid #eee
+
+    &:last-child
+      border-bottom: 0 none
+      margin-bottom: 0
+      padding-bottom: 0
+
+    .name
+      float: left
+      width: 150px
+      font-size: 14px
+      font-weight: bold
+      line-height: 26px
+
+    ul.hits
+      float: left
+      margin: 0
+      padding: 0
+
+      li
+        float: left
+        margin-right: 30px
+        background: url(/images/show.png) no-repeat 75px center
+        width: 70px
+        padding: 2px 25px 2px 5px
+        border: 1px solid #eee
+        background-color: #f9f9f9
+        border-radius: 3px
+
+        &.email
+          background-image: url(/images/email.png)
+
+        &.website
+          background-image: url(/images/website.png)
+
+        &.search
+          background-image: url(/images/search.png)
+
+        &:last-child
+          margin-right: 0
+
+        span
+          float: left
+          display: inline-block
+
+        span.key
+          line-height: 20px
+          color: #ccc
+          padding-right: 5px
+          width: 30px
+          overflow: ellipsis
+
+        span.value
+          font-size: 16px
+          line-height: 20px
+          font-weight: bold
+          text-align: right
+          width: 30px

@@ -1,0 +1,13 @@
+= haml :_form
+
+#stats
+  - MONTHS.each_with_index do |month, index|
+    .month
+      .name= month
+
+      %ul.hits
+        - hits = @visits[index + 1]
+        - FIELDS.map do |field|
+          %li{ :class => field }
+            %span.key= field
+            %span.value= hits[field.to_s] || 0

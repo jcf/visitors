@@ -26,12 +26,14 @@ Gem::Specification.new do |s|
     'dm-migrations'       => '1.0.2',
     'dm-postgres-adapter' => '1.0.2',
     'sinatra'             => '1.1.3',
-    'thor'                => '0.14.6'
+    'thor'                => '0.14.6',
+    'haml'                => '3.0.25'
   }.each { |gem, version| s.add_dependency gem, "~> #{version}" }
 
   {
     'rspec'       => '2.5.0',
     'guard-rspec' => '0.1.9',
-    'rb-fsevent'  => '0.3.10'
+    'rb-fsevent'  => '0.3.10',
+    'shotgun'     => '0.9'
   }.each { |gem, version| s.add_development_dependency gem, "~> #{version}" }
 end
