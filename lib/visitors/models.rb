@@ -14,7 +14,7 @@ MODEL_NAMES.each do |class_name|
       property :archived,    Time
       property :resource_id, Integer, :required => true
 
-      Visitors.fields.each do |field|
+      Visitors::Resource.fields.each do |field|
         property field, Integer, :default => 0, :required => true
       end
     end
