@@ -4,7 +4,6 @@ require 'redis-namespace'
 module Helpers
   class UnsupportedField < StandardError; end
 
-  FIELDS = [:show, :search, :email, :website]
   SET_NAME = 'resource_ids'
 
   def redis
@@ -13,7 +12,7 @@ module Helpers
   end
 
   def fields
-    FIELDS
+    Visitors.config.fields || []
   end
 
   def assert_valid_field!(name)

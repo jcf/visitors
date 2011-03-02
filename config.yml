@@ -1,3 +1,10 @@
+fields:
+  - show
+  - search
+  - email
+  - website
+  - similar
+
 development:
   redis_namespace: visitors_development
   redis_config:

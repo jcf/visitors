@@ -5,6 +5,10 @@ class Visitors::Config
     new.tap { |instance| instance.send(:define_methods_from_yaml) }
   end
 
+  def fields
+    yaml['fields'] && Array(yaml['fields']).map(&:to_sym)
+  end
+
   def all
     return yaml[env] if yaml[env]
     raise MissingEnvironmentError, "#{env.inspect} environment not configured"
