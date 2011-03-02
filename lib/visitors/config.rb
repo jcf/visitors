@@ -20,8 +20,14 @@ class Visitors::Config
 
   private
 
-  def yaml
-    @yaml ||= YAML.load_file(File.expand_path('../../../config.yml', __FILE__))
+  if defined?(RAILS_ROOT)
+    def yaml
+      @yaml ||= YAML.load_file("#{RAILS_ROOT}/config/visitors.yml")
+    end
+  else
+    def yaml
+      @yaml ||= YAML.load_file(File.expand_path('../../../config.yml', __FILE__))
+    end
   end
 
   def env
