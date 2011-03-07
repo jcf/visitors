@@ -3,7 +3,7 @@
 The visitors gem gives you a simple tracking system for use in your
 Ruby-based web application. Anywhere in your app you can call…
 
-    Visitors.increment(1, 'show')
+    Visitors.increment(1, :show)
 
 …to increment a counter that corresponds to the resource with an
 identifier of 1.
