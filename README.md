@@ -18,7 +18,6 @@ Next make sure you have Redis running and the config.yml file has the
 right configuration settings to connect to your Redis instance.
 
     development:
-      database: postgres://localhost/visitors_development
       redis_namespace: visitors_development
       redis_config:
         host: localhost
@@ -29,7 +28,7 @@ Require the visitors gem in your Rails app via your Gemfile?
 
     gem 'visitors', '~> 0.0.2'
 
-Now add `Visitors.increment(params[:id], 'show')` to a show action in
+Now add `Visitors.increment(@resource.id, :show)` to a show action in
 your application.
 
 Launch a Vegas-powered Sinatra web console to see who's been visiting
