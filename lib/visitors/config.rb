@@ -1,3 +1,5 @@
+require 'yaml'
+
 class Visitors::Config
   class MissingEnvironmentError < StandardError; end
 
@@ -31,7 +33,7 @@ class Visitors::Config
   end
 
   def env
-    ENV['VISITORS_ENV'] || 'development'
+    ENV['RAILS_ENV'] || ENV['VISITORS_ENV'] || 'development'
   end
 
   def define_methods_from_yaml

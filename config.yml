@@ -9,3 +9,8 @@ development:
   redis_namespace: visitors_development
   redis_config:
     host: localhost
+
+uat:
+  redis_namespace: visitors_development
+  redis_config:
+    host: qa.touchlocal.com
