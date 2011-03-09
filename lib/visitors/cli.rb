@@ -9,6 +9,7 @@ class Visitors::CLI < Thor
   desc 'web', 'start the web console (NOT IMPLEMENTED)'
   def web
     require 'vegas'
+    require File.expand_path('../../../server', __FILE__)
     Vegas::Runner.new(Visitors::Server, 'visitors_app')
   end
 end
