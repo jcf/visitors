@@ -3,9 +3,10 @@ require 'spec_helper'
 describe Visitors::Config do
   describe '#all' do
     it 'uses the config.yml file to return a hash of configuration information' do
-      File.stub!(:expand_path => '/path/to/config.yml')
-      YAML.should_receive(:load_file).with('/path/to/config.yml').and_return('development' => {})
       Visitors.stub!(:env => 'development')
+      File.stub!(:expand_path => '/path/to/config.yml')
+
+      YAML.should_receive(:load_file).with('/path/to/config.yml').and_return('development' => {})
       Visitors::Config.load.all
     end
 

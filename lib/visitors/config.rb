@@ -12,8 +12,8 @@ class Visitors::Config
   end
 
   def all
-    return yaml[env] if yaml[env]
-    raise MissingEnvironmentError, "#{env.inspect} environment not configured"
+    return yaml[Visitors.env] if yaml[Visitors.env]
+    raise MissingEnvironmentError, "#{Visitors.env.inspect} environment not configured"
   end
 
   def inspect
@@ -30,10 +30,6 @@ class Visitors::Config
     def yaml
       @yaml ||= YAML.load_file(File.expand_path('../../../config.yml', __FILE__))
     end
-  end
-
-  def env
-    ENV['RAILS_ENV'] || ENV['VISITORS_ENV'] || 'development'
   end
 
   def define_methods_from_yaml
