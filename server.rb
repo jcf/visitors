@@ -3,7 +3,9 @@ require 'bundler/setup'
 
 require 'sinatra'
 require 'haml'
-require File.expand_path('../../visitors', __FILE__)
+
+$:.push File.expand_path(File.dirname(__FILE__))
+require 'lib/visitors'
 
 class Visitors::Server < Sinatra::Base
   MONTHS = %w[
@@ -25,8 +27,8 @@ class Visitors::Server < Sinatra::Base
 
   dir = File.expand_path('..', __FILE__)
 
-  set :views,  "#{dir}/server/views"
-  set :public, "#{dir}/server/public"
+  set :views,  "#{dir}/views"
+  set :public, "#{dir}/public"
   set :static, true
 
   get '/' do
