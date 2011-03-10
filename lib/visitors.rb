@@ -1,4 +1,5 @@
 $:.push File.expand_path('..', __FILE__)
+require 'bundler/setup'
 require 'visitors/helpers'
 
 module Visitors
