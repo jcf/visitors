@@ -1,6 +1,7 @@
 $:.push File.expand_path('..', __FILE__)
 require 'bundler/setup'
 require 'visitors/helpers'
+require 'visitors/core_ext/hash'
 
 module Visitors
   extend self
@@ -17,10 +18,12 @@ module Visitors
   end
 
   def find(id)
+    return if Visitors.config.disabled
     Resource.find(id)
   end
 
   def increment(id, field)
+    return if Visitors.config.disabled
     Resource.new(id).increment(field)
   end
 end

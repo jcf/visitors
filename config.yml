@@ -9,3 +9,6 @@ development:
   :redis_namespace: visitors_development
   :redis_config:
     :host: localhost
+
+production:
+  :disabled: true

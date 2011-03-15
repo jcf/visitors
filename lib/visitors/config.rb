@@ -3,6 +3,12 @@ require 'yaml'
 class Visitors::Config
   class MissingEnvironmentError < StandardError; end
 
+  DEFAULTS = {
+    :redis_namespace => "visitors_#{Visitors.env}",
+    :redis_connection => {:host => '127.0.0.1'},
+    :disabled => false
+  }
+
   def self.load
     new.tap { |instance| instance.send(:define_methods_from_yaml) }
   end
@@ -33,7 +39,7 @@ class Visitors::Config
   end
 
   def define_methods_from_yaml
-    all.each do |key, value|
+    DEFAULTS.deep_merge(all).each do |key, value|
       self.class.send(:define_method, key) { value }
     end
   end
